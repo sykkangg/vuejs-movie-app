@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-card">
+  <div class="movie-card" @click="handleClick">
     <!-- 영화 포스터 -->
     <div class="poster">
       <img
@@ -22,7 +22,8 @@
 
 <script setup>
 console.log('Movie Card 컴포넌트 로드 완료')
-defineProps({
+
+const props = defineProps({
   title: {
     type: String,
     required: true,
@@ -40,6 +41,19 @@ defineProps({
     required: true,
   },
 })
+
+const emit = defineEmits(['movie-click'])
+
+const handleClick = () => {
+  console.log(`${props.title} 카드가 클릭됨!`)
+
+  emit('movie-click', {
+    title: props.title,
+    rate: props.rate,
+    year: props.year,
+    overview: props.overview,
+  })
+}
 </script>
 
 <style scoped>

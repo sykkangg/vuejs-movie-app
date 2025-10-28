@@ -1,6 +1,11 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import MovieCard from './components/MovieCard.vue'
+
+const handleMovieClick = (movieData) => {
+  console.log('부모가 받은 데이터', movieData)
+  alert(`${movieData.title}을(를) 클릭하셨습니다! \n 평점: ${movieData.rate} ⭐`)
+}
 </script>
 
 <template>
@@ -16,9 +21,27 @@ import MovieCard from './components/MovieCard.vue'
 
   <main>
     <div class="movie-grid">
-      <MovieCard title="쿵푸팬더" rate="3" year="2024" overview="영화 설명입니다." />
-      <MovieCard title="베놈" rate="3" year="2024" overview="영화 설명입니다." />
-      <MovieCard title="겨울왕국" rate="4" year="2024" overview="영화 설명입니다." />
+      <MovieCard
+        title="쿵푸팬더"
+        rate="3"
+        year="2024"
+        overview="영화 설명입니다."
+        @movie-click="handleMovieClick"
+      />
+      <MovieCard
+        title="베놈"
+        rate="3"
+        year="2024"
+        overview="영화 설명입니다."
+        @movie-click="handleMovieClick"
+      />
+      <MovieCard
+        title="겨울왕국"
+        rate="4"
+        year="2024"
+        overview="영화 설명입니다."
+        @movie-click="handleMovieClick"
+      />
     </div>
   </main>
 
