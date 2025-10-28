@@ -2,10 +2,7 @@
   <div class="movie-card" @click="handleClick">
     <!-- 영화 포스터 -->
     <div class="poster">
-      <img
-        src="https://image.tmdb.org/t/p/w500/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg"
-        alt="영화 포스터"
-      />
+      <img :src="poster" :alt="title" />
     </div>
 
     <!-- 영화 정보 -->
@@ -37,6 +34,10 @@ const props = defineProps({
     required: true,
   },
   overview: {
+    type: String,
+    required: true,
+  },
+  poster: {
     type: String,
     required: true,
   },

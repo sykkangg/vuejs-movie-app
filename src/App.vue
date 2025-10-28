@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import MovieCard from './components/MovieCard.vue'
 
@@ -6,6 +7,57 @@ const handleMovieClick = (movieData) => {
   console.log('부모가 받은 데이터', movieData)
   alert(`${movieData.title}을(를) 클릭하셨습니다! \n 평점: ${movieData.rate} ⭐`)
 }
+
+const movies = ref([
+  {
+    id: 1,
+    title: '쿵푸팬더 4',
+    rate: '8.5',
+    year: '2024',
+    overview: '평화의 계곡을 지키던 용의 전사 포가 새로운 모험을 떠납니다.',
+    poster: 'https://image.tmdb.org/t/p/w500/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg',
+  },
+  {
+    id: 2,
+    title: '베놈: 라스트 댄스',
+    rate: '7.2',
+    year: '2024',
+    overview: '에디와 베놈의 마지막 이야기가 펼쳐집니다.',
+    poster: 'https://image.tmdb.org/t/p/w500/aosm8NMQ3UyoBVpSxyimorCQykC.jpg',
+  },
+  {
+    id: 3,
+    title: '겨울왕국',
+    rate: '7.4',
+    year: '2013',
+    overview: '자매의 사랑과 마법이 펼쳐지는 디즈니 애니메이션.',
+    poster: 'https://image.tmdb.org/t/p/w500/kgwjIb0CuS4ZzNRhlTu7LqKhGP3.jpg',
+  },
+  {
+    id: 4,
+    title: '인사이드 아웃 2',
+    rate: '7.8',
+    year: '2024',
+    overview: '라일리의 새로운 감정들이 등장합니다.',
+    poster: 'https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg',
+  },
+  {
+    id: 5,
+    title: '듄: 파트 2',
+    rate: '8.3',
+    year: '2024',
+    overview: '폴 아트레이드의 대서사시가 계속됩니다.',
+    poster: 'https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg',
+  },
+  {
+    id: 6,
+    title: '위키드',
+    rate: '7.9',
+    year: '2024',
+    overview: '오즈의 마법사 이전의 이야기를 담은 뮤지컬 판타지.',
+    poster: 'https://image.tmdb.org/t/p/w500/c5Tqxeo1UpBvnAc3csUm7j3hlQl.jpg',
+  },
+])
 </script>
 
 <template>
@@ -22,26 +74,19 @@ const handleMovieClick = (movieData) => {
   <main>
     <div class="movie-grid">
       <MovieCard
-        title="쿵푸팬더"
-        rate="3"
-        year="2024"
-        overview="영화 설명입니다."
+        v-for="movie in movies"
+        :key="movie.id"
+        :title="movie.title"
+        :rate="movie.rate"
+        :year="movie.year"
+        :overview="movie.overview"
+        :poster="movie.poster"
         @movie-click="handleMovieClick"
       />
-      <MovieCard
-        title="베놈"
-        rate="3"
-        year="2024"
-        overview="영화 설명입니다."
-        @movie-click="handleMovieClick"
-      />
-      <MovieCard
-        title="겨울왕국"
-        rate="4"
-        year="2024"
-        overview="영화 설명입니다."
-        @movie-click="handleMovieClick"
-      />
+    </div>
+
+    <div class="emty" v-if="movies.length === 0">
+      <p>😢 영화가 없습니다.</p>
     </div>
   </main>
 
