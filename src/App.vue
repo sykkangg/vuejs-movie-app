@@ -1,21 +1,26 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import MovieCard from './components/MovieCard.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+      <h1>🎬 영화 검색 앱</h1>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
   </header>
+
+  <main>
+    <div class="movie-grid">
+      <MovieCard title="쿵푸팬더" rate="3" year="2024" overview="영화 설명입니다." />
+      <MovieCard title="베놈" rate="3" year="2024" overview="영화 설명입니다." />
+      <MovieCard title="겨울왕국" rate="4" year="2024" overview="영화 설명입니다." />
+    </div>
+  </main>
 
   <RouterView />
 </template>
