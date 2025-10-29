@@ -9,6 +9,9 @@ const handleMovieClick = (movieData) => {
   alert(`${movieData.title}을(를) 클릭하셨습니다! \n 평점: ${movieData.rate} ⭐`)
 }
 
+// 검색어 상태
+const searchQuery = ref('')
+
 const movies = ref([
   {
     id: 1,
@@ -60,15 +63,31 @@ const movies = ref([
   },
 ])
 
+// computed로 검색 필터링
+const filteredMovies = computed(() => {
+  if (!searchQuery.value) {
+    return movies.value
+  }
+  return movies.value.filter((movie) =>
+    movie.title.toLowerCase().includes(searchQuery.value.toLowerCase()),
+  )
+})
+
+// 검색 핸들러
 const handleSearch = (query) => {
-  console.log('부모가 받은 검색어:', query)
+  searchQuery.value = query
+  console.log('검색어:', query)
 }
 
-const filteredList = computed(() => {})
+// 검색 초기화
+const handleClear = () => {
+  searchQuery.value = ''
+  console.log('검색 초기화')
+}
 </script>
 
 <template>
-  <!-- <header>
+  <header>
     <div class="wrapper">
       <h1>🎬 영화 검색 앱</h1>
       <nav>
@@ -76,15 +95,21 @@ const filteredList = computed(() => {})
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
-  </header> -->
+  </header>
 
   <main>
-    <!-- 📝 TODO: 여기에 SearchForm 컴포넌트를 추가하세요 -->
-    <SearchForm @search="handleSearch" />
-    <!-- <p>{{ searchKeyword }}</p> -->
-    <div class="movie-grid">
+    <!-- 검색 폼 컴포넌트 -->
+    <SearchForm @search="handleSearch" @clear="handleClear" />
+
+    <!-- 검색 결과 개수 표시 -->
+    <div class="result-info">
+      <p v-if="searchQuery">"{{ searchQuery }}" 검색 결과: {{ filteredMovies.length }}개</p>
+      <p v-else>전체 영화: {{ movies.length }}개</p>
+    </div>
+
+    <div class="movie-grid" v-if="filteredMovies.length > 0">
       <MovieCard
-        v-for="movie in movies"
+        v-for="movie in filteredMovies"
         :key="movie.id"
         :title="movie.title"
         :rate="movie.rate"
@@ -95,7 +120,10 @@ const filteredList = computed(() => {})
       />
     </div>
 
-    <!-- 📝 TODO: 검색 결과 없을 때 메시지 추가 -->
+    <div v-else class="empty">
+      <p>😢 "{{ searchQuery }}"에 대한 검색 결과가 없습니다.</p>
+      <button @click="handleClear" class="reset-button">전체 보기</button>
+    </div>
   </main>
 
   <RouterView />
@@ -142,9 +170,44 @@ main {
   padding: 0 20px;
 }
 
+.result-info {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #4b5563;
+  font-weight: 500;
+}
+
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 30px;
+}
+
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.empty p {
+  font-size: 20px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.reset-button {
+  padding: 12px 24px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.reset-button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
 }
 </style>

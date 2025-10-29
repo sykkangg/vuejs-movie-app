@@ -1,8 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import MovieCard from './components/MovieCard.vue'
-import SearchForm from './components/SearchForm.vue'
 
 const handleMovieClick = (movieData) => {
   console.log('부모가 받은 데이터', movieData)
@@ -59,16 +58,10 @@ const movies = ref([
     poster: 'https://image.tmdb.org/t/p/w500/c5Tqxeo1UpBvnAc3csUm7j3hlQl.jpg',
   },
 ])
-
-const handleSearch = (query) => {
-  console.log('부모가 받은 검색어:', query)
-}
-
-const filteredList = computed(() => {})
 </script>
 
 <template>
-  <!-- <header>
+  <header>
     <div class="wrapper">
       <h1>🎬 영화 검색 앱</h1>
       <nav>
@@ -76,12 +69,11 @@ const filteredList = computed(() => {})
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
-  </header> -->
+  </header>
 
   <main>
     <!-- 📝 TODO: 여기에 SearchForm 컴포넌트를 추가하세요 -->
-    <SearchForm @search="handleSearch" />
-    <!-- <p>{{ searchKeyword }}</p> -->
+
     <div class="movie-grid">
       <MovieCard
         v-for="movie in movies"
